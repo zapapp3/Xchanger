@@ -1,0 +1,2 @@
+WIDTH = None
+HEIGHT = None
