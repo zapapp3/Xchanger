@@ -7,24 +7,28 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
 class MainFrame(ttk.Frame):
-    def __init__(self, master):
+    def __init__(self, master, frame_width, frame_height):
         super().__init__(master, padding=10)
-        self.pack(fill=BOTH, expand=True)
+        self.pack(expand=True)
+        
+        # vars
+        self.frame_width = frame_width
+        self.frame_height = frame_height
         
         # create form inputs
+        self.form()
+        
+    def form(self):
         name = self.input_field("Name")
         email = self.input_field("Email ID")
-        
-    def form():
-        pass
     
     def input_field(self, title):
         container = ttk.Frame(master=self)
         label = ttk.Label(master=container, text=title)
-        entry = ttk.Entry(master=container)
+        entry = ttk.Entry(master=container, width=round(0.05 * self.frame_width))
         label.pack(side=LEFT)
-        entry.pack(side=RIGHT)
-        container.pack(fill=BOTH, expand=True)
+        entry.pack(side=RIGHT, padx=(10, 0))
+        container.pack(fill=BOTH, expand=True, pady=7)
         return entry
         
     def default_text(self):
@@ -50,5 +54,5 @@ if (__name__ == "__main__"):
     # main.geometry("{}x{}+{}+{}".format(frame_width, frame_height, x, y))
     main.geometry("{}x{}+{}+{}".format(frame_width, frame_height, x, y))
     
-    app = MainFrame(main)
+    app = MainFrame(main, frame_width, frame_height)
     main.mainloop()
