@@ -15,6 +15,9 @@ class MainFrame(ttk.Frame):
         super().__init__(self.master, padding=10)
         self.pack(expand=True)
         
+        # images and icons var
+        self.logo_icon = ttk.PhotoImage(file="./images/x-logo2.png")
+        
         # create form inputs
         # self.form()
         
@@ -28,8 +31,9 @@ class MainFrame(ttk.Frame):
         
         # setting screen display
         self.set_display()
-        self.create_menu()
+        self.create_file_menu()
         self.main_content()
+        # self.side_bar()
         
         # action point
         self.saved_action = None
@@ -60,18 +64,39 @@ class MainFrame(ttk.Frame):
         )
         
         self.saved_action = (("folder", opened_folder))
+        
+    def view_settings(self):
+        pass
     
-    def create_menu(self):
+    def history_settings(self):
+        pass
+    
+    def other_settings(self):
+        pass
+    
+    def create_file_menu(self):
+        # creating menu
         menu = tk.Menu()
         self.master.config(menu = menu)
+        
+        # file menu
         file_menu = tk.Menu(menu, tearoff=0)
         file_menu.add_command(label="Open", command=self.open_dialog)
         file_menu.add_command(label="Open folder", command=self.open_folder_dialog)
-        file_menu.add_command(label="Save as", command=self.save_as_dialog)
+        # file_menu.add_command(label="Save as", command=self.save_as_dialog)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.master.destroy)
         menu.add_cascade(label="File", menu=file_menu)
         
+        # setting menu
+        settings_menu = tk.Menu(master=menu, tearoff=0)
+        settings_menu.add_command(label="View", command=self.view_settings)
+        settings_menu.add_command(label="History", command=self.history_settings)
+        settings_menu.add_command(label="Others", command=self.other_settings)
+        
+        menu.add_cascade(label="Settings", menu=settings_menu)
+    
+    
         
     def main_content(self):
         container = ttk.Frame(self)
@@ -84,11 +109,22 @@ class MainFrame(ttk.Frame):
         
         button.pack()
         container.pack()
+        
+    def side_bar(self):
+        container = ttk.Frame(self)
+        label = ttk.Label(
+            master=container,
+            text="Instructions"
+        )
+        
+        label.pack()
+        container.pack(fill=X)
     
     def set_display(self):
         # settings
         # setting screen and coordinates
         main.geometry("{}x{}+{}+{}".format(self.frame_width, self.frame_height, self.x, self.y))
+        main.iconphoto(False, self.logo_icon)
         
     def form(self):
         name = self.input_field("Name")
@@ -112,7 +148,8 @@ class MainFrame(ttk.Frame):
         
         
 if (__name__ == "__main__"):
-    main = ttk.Window("IX - file renamer", themename="darkly")
+    # main = ttk.Window("IX - file renamer", themename="darkly")
+    main = ttk.Window("Xchanger", themename="darkly")
     
     app = MainFrame(main)
     main.mainloop()
